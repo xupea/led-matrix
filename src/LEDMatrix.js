@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from "react";
 import styles from "./App.css";
-import LEDMatrix from "./LEDMatrix";
 
-export default class App extends Component {
+type Props = {};
+
+export default class Home extends Component<Props> {
+  props: Props;
+
   constructor(props) {
     super(props);
 
@@ -43,10 +46,22 @@ export default class App extends Component {
   render() {
     let source = this.state.source;
     return (
-      <div className="container" data-tid="container">
-        <div className="columns">
-          <LEDMatrix />
-          <LEDMatrix />
+      <div>
+        <div
+          className="parent"
+          onMouseDown={() => this.onMouseDown()}
+          onMouseUp={() => this.onMouseUp()}
+        >
+          {[...Array(108).keys()].map(index => {
+            let isOn = source.indexOf(index) > -1;
+            return (
+              <span
+                className={isOn ? "childOn" : "child"}
+                onMouseOver={() => this.onMouseOver(index)}
+                onClick={() => this.onClickHandler(index)}
+              />
+            );
+          })}
         </div>
       </div>
     );
